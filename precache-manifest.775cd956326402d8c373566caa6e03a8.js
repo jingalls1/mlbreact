@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/mlbreact/static/js/runtime~main.1fa25a27.js"
   },
   {
-    "revision": "0784582f05db4d76bd9d",
-    "url": "/mlbreact/static/js/main.a9f2b5cb.chunk.js"
+    "revision": "30562595f5f0ea474d94",
+    "url": "/mlbreact/static/js/main.c48a5bc8.chunk.js"
   },
   {
     "revision": "e93bc7dff72ddddbd85a",
     "url": "/mlbreact/static/js/2.a81b9cc6.chunk.js"
   },
   {
-    "revision": "0784582f05db4d76bd9d",
-    "url": "/mlbreact/static/css/main.263c4ebe.chunk.css"
+    "revision": "30562595f5f0ea474d94",
+    "url": "/mlbreact/static/css/main.8fa18d45.chunk.css"
   },
   {
-    "revision": "9eac3eb6da140486b378bb684d1ec16d",
+    "revision": "ba6b13fabcf41da4a3e0d56c6bd3e231",
     "url": "/mlbreact/index.html"
   }
 ];
