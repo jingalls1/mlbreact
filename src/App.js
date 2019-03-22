@@ -12,19 +12,22 @@ class App extends Component {
     this.state = {
       redditData: [],
       defaultQuery: "redux",
-      text: ""
+      text: "",
+      loading: true
     };
   }
 
   componentDidMount() {
     fetch(API)
       .then(response => response.json())
-      .then(data => this.setState({ redditData: data.data.children }));
+      .then(data =>
+        this.setState({ redditData: data.data.children, loading: false })
+      );
   }
 
   renderListOfGames = threads => {
     if (threads.length === 0) {
-      return <div> No baseball games going on right now. Sorry bro! </div>
+      return <div> No baseball games going on right now. Sorry bro! </div>;
     } else {
       return threads.map(hit => (
         <li key={hit.data.created_utc}>
@@ -32,15 +35,16 @@ class App extends Component {
             {hit.data.title}
           </a>
 
-          <div className="italicize">stream links will appear here</div>
+          <div className="italicize">click above to find stream links</div>
         </li>
-      ))
+      ));
     }
-  }
+  };
 
   render() {
-    const threads = this.state.redditData.filter(
-      game => game.data.link_flair_text === "Game Thread"
+    let reg = /^Game/;
+    const threads = this.state.redditData.filter(basketball =>
+      reg.test(basketball.data.title)
     );
     let d = new Date();
     let months = [
@@ -66,23 +70,33 @@ class App extends Component {
       "Friday",
       "Saturday"
     ];
-
-    return (
-      <div>
-        <br />
-        <h2
-          onClick={() => window.open("https://campusstreams.ga")}
-          className="weather"
-        >
-          {" "}
-          MLB Games for {days[d.getDay()]}, {months[d.getMonth()]} {d.getDate()}
-        </h2>
-        <ol className="center">
-          {this.renderListOfGames(threads)}
-        </ol>
-        <div> </div>
-      </div>
-    );
+    let content;
+    if (this.state.loading) {
+      content = (
+        <div>
+          <h2 className="loading">
+            {" "}
+            grabbing all the latest mlb games, hold up!
+          </h2>
+          <div class="loader" />{" "}
+        </div>
+      );
+    } else {
+      content = (
+        <div>
+          <h2
+            onClick={() => window.open("https://campusstreams.ga")}
+            className="weather"
+          >
+            {" "}
+            MLB Games for {days[d.getDay()]}, {months[d.getMonth()]}{" "}
+            {d.getDate()}
+          </h2>
+          <ol className="center">{this.renderListOfGames(threads)}</ol>
+        </div>
+      );
+    }
+    return <div>{content}</div>;
   }
 }
 
