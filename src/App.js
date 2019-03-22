@@ -22,6 +22,22 @@ class App extends Component {
       .then(data => this.setState({ redditData: data.data.children }));
   }
 
+  renderListOfGames = threads => {
+    if (threads.length === 0) {
+      return <div> No baseball games going on right now. Sorry bro! </div>
+    } else {
+      return threads.map(hit => (
+        <li key={hit.data.created_utc}>
+          <a href={hit.data.url} target="_blank">
+            {hit.data.title}
+          </a>
+
+          <div className="italicize">stream links will appear here</div>
+        </li>
+      ))
+    }
+  }
+
   render() {
     const threads = this.state.redditData.filter(
       game => game.data.link_flair_text === "Game Thread"
@@ -53,14 +69,6 @@ class App extends Component {
 
     return (
       <div>
-        {/*<h2> Example Shit </h2>
-        <ol>
-          {this.state.redditData.map(hit => (
-            <li key={hit.data.created_utc}>
-              <a href={hit.data.url}>{hit.data.title}</a>
-            </li>
-          ))}
-        </ol>*/}
         <br />
         <h2
           onClick={() => window.open("https://campusstreams.ga")}
@@ -70,15 +78,7 @@ class App extends Component {
           MLB Games for {days[d.getDay()]}, {months[d.getMonth()]} {d.getDate()}
         </h2>
         <ol className="center">
-          {threads.map(hit => (
-            <li key={hit.data.created_utc}>
-              <a href={hit.data.url} target="_blank">
-                {hit.data.title}
-              </a>
-
-              <div className="italicize">stream links will appear here</div>
-            </li>
-          ))}
+          {this.renderListOfGames(threads)}
         </ol>
         <div> </div>
       </div>
