@@ -31,7 +31,7 @@ class App extends Component {
     } else {
       return threads.map(hit => (
         <li key={hit.data.created_utc}>
-          <a href={hit.data.url} target="_blank">
+          <a href={hit.data.url} target="_blank" style={{fontWeight: "bold"}}>
             {hit.data.title}
           </a>
 
